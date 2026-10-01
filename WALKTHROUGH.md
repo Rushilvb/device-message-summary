@@ -97,8 +97,8 @@ Result: **26 passed**.
 
 - **Validate before deduplicating.** Only a valid record can claim a `(device_id, sequence)` pair. Otherwise a broken line would cause the real record after it to be thrown away as a "duplicate".
 - **The latest status comes from the highest sequence, not the last arrival.** Messages can arrive out of order. An older message is still counted, but it never overwrites the current state.
-- **Strict UTF-8, no replacement characters.** The first draft decoded with `errors="replace"`, which turned `"D\xff"` into `"D�"` and accepted it as a different device ID. Each line is now decoded strictly, and a line that can't be decoded becomes `BAD_JSON`.
+- **Reviewed and kept:** The first draft decoded with `errors="replace"`, which turned `"D\xff"` into `"D�"` and accepted it as a different device ID. This was changed to strict per-line decoding, so a line that can't be decoded becomes `BAD_JSON`, and I kept a test for it.
 - **Repeated keys are rejected.** Python's `json` normally keeps the last value, which would quietly make a line with two `status` fields look valid.
 - **503 for an unreadable file.** The service is running but can't reach its data. A 500 would also be defensible.
-- **The `/` redirect.** While testing manually I opened the bare URL and got a 404, because the only route was `/summary`. I added a 307 redirect from `/` to `/summary`, and a test that checks the redirect itself.
+- **Defect found and fixed:** While testing manually I opened the bare URL and got a 404, because the only route was `/summary`. I added a 307 redirect from `/` to `/summary`, and a test that checks the redirect itself.
 - **Known limitation.** The whole file is read into memory, and the set of seen pairs grows with the input. A large or continuous stream would need streaming reads and a bounded dedup store.

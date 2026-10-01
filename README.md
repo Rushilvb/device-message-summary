@@ -4,7 +4,7 @@ Reads a JSON Lines file of simulated device messages and returns a summary. The 
 
 ## Prerequisites
 
-- Python 3.10+ (developed and tested on 3.11)
+- Python 3.10+ (tested on 3.13 on Windows and 3.10 on Linux)
 - `pip`; no database, hardware or network services needed
 
 ## Setup
@@ -120,7 +120,7 @@ The whole file is read into memory, and the set of seen `(device_id, sequence)` 
 
 ## Time spent
 
-~2h 45m
+~1h 47m
 
 ## React page (not built)
 
